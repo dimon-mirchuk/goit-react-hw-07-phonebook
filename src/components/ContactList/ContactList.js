@@ -5,6 +5,8 @@ import ContactListItem from "../ContactListItem";
 import { useGetContactsQuery } from "../../Redux/contacts/contactsSlice";
 import { filterValue } from "../../Redux/contacts/contacts-selectors";
 import styles from "./ContactList.module.css";
+import { CSSTransition, TransitionGroup } from "react-transition-group";
+import slideTransition from "../../Transitions/slide.module.css";
 
 const { list } = styles;
 
@@ -26,12 +28,21 @@ const ContactList = () => {
   }, [data, value]);
 
   return (
-    <ul className={list}>
-      {contacts.map((contact) => (
-        <ContactListItem key={contact.id} contact={contact} />
-      ))}
+    <>
+      <TransitionGroup className={list} component="ul">
+        {contacts.map((contact) => (
+          <CSSTransition
+            key={contact.id}
+            timeout={500}
+            classNames={slideTransition}
+            unmountOnExit
+          >
+            <ContactListItem key={contact.id} contact={contact} />
+          </CSSTransition>
+        ))}
+      </TransitionGroup>
       {isLoading && <h2>Loading...</h2>}
-    </ul>
+    </>
   );
 };
 
