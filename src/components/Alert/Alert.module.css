@@ -1,0 +1,12 @@
+.alert {
+  position: absolute;
+  top: 0;
+  right: 0;
+  display: flex;
+  align-items: center;
+
+  width: 260px;
+  height: 40px;
+  color: white;
+  background-color: red;
+}

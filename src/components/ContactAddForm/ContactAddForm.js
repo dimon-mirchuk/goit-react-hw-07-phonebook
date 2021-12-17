@@ -7,7 +7,7 @@ import styles from "./ContactAddForm.module.css";
 
 const { form, label, input, button } = styles;
 
-function ContactAddForm() {
+function ContactAddForm({ changeVisible }) {
   const [createContact, { isLoading }] = useAddContactMutation();
   const { data: contacts } = useGetContactsQuery();
 
@@ -20,7 +20,11 @@ function ContactAddForm() {
       phone,
     };
     if (contacts.some((contact) => name === contact.name)) {
-      toast.error(`${name} is already in contacts`);
+      changeVisible(true);
+      setTimeout(() => {
+        changeVisible(false);
+      }, 2000);
+      // toast.error(`${name} is already in contacts`);
       e.currentTarget.reset();
       return;
     }
